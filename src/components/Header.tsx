@@ -1,9 +1,14 @@
-import Container from "@/components/Container";
-import { getCollectionById, getGlobalMetadata } from "@/lib/directus";
 import Link from "next/link";
+import { Github } from "lucide-react";
+
+import { getGlobalMetadata } from "@/lib/directus";
+import { getPages } from "@/lib/pages";
+
+import Container from "@/components/Container";
 
 async function Header() {
   const { title } = await getGlobalMetadata();
+  const pages = (await getPages({ fields: ['title', 'slug', 'navigation'] })).filter(({ navigation }) => navigation === 'yes');
   return (
     <header className="bg-slate-50 py-8">
       <Container>
@@ -13,8 +18,24 @@ async function Header() {
               <Link href="/">{ title }</Link>
             </p>
           </div>
-          <div>
-            asdf
+          <div className="flex items-center gap-4">
+            <ul>
+              {pages.map(({ title, slug }) => {
+                return (
+                  <li key={slug}>
+                    <Link href={`/${slug}`}>{ title }</Link>
+                  </li>
+                )
+              })}
+            </ul>
+            <span>/</span>
+            <ul>
+              <li>
+                <a href="https://github.com/colbyfayock/test-directus-blog">
+                  <Github className="w-4 h-auto" />
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </Container>
