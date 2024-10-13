@@ -1,7 +1,11 @@
-import { getHome, getPosts } from "@/lib/directus";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 import { Orbit } from 'lucide-react';
+
+import { getHome } from "@/lib/directus";
+import { getPosts } from '@/lib/posts';
+
+import { Button } from "@/components/ui/button";
 import Container from "@/components/Container";
 
 
@@ -34,10 +38,13 @@ export default async function Home() {
               </ul>
             )}
           </div>
-          <img
+          <Image
             className="block aspect-[21/9] object-cover rounded-lg"
+            width="2100"
+            height="900"
             src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${data.hero_cover}`}
             alt=""
+            sizes="100vw"
           />
         </Container>
       </section>
