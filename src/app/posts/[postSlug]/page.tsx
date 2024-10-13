@@ -1,6 +1,7 @@
 import { getPostBySlug } from "@/lib/posts";
 
 import Container from "@/components/Container";
+import { getItemById } from "@/lib/directus";
 
 export default async function Post({
   params,
@@ -8,6 +9,11 @@ export default async function Post({
   const data = await getPostBySlug(params.pageSlug, {
     fields: ["title", "body"],
   });
+
+  const categories = !Array.isArray(data.categories) ? [] : await Promise.all(data.categories.map(async (categoryId: number) => {
+    const junction = await getItemById('posts_post_categories', categoryId);
+    return getItemById('post_categories', junction.post_categories_slug, { fields: ['title'] });
+  }));
 
   return (
     <>
