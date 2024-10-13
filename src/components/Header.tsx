@@ -19,7 +19,7 @@ async function Header() {
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <ul>
+            <ul className="flex gap-4">
               {pages.map(({ title, slug }) => {
                 return (
                   <li key={slug}>
@@ -27,9 +27,12 @@ async function Header() {
                   </li>
                 )
               })}
+              <li>
+                <Link href="/courses">Courses</Link>
+              </li>
             </ul>
             <span>/</span>
-            <ul>
+            <ul className="flex gap-4">
               <li>
                 <a href="https://github.com/colbyfayock/test-directus-blog">
                   <Github className="w-4 h-auto" />
