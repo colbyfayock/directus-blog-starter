@@ -1,19 +1,27 @@
-import { createDirectus, readItem, readItems, rest } from '@directus/sdk';
+import { createDirectus, readItem, readItems, rest } from "@directus/sdk";
 
 export interface ItemsQuery {
   limit?: number;
-  fields?: Array<string> ;
+  fields?: Array<string>;
 }
 
-export const directus = createDirectus(String(process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT)).with(rest({
-  onRequest: (options) => ({ ...options, cache: 'no-store' }),
-}));
+export const directus = createDirectus(
+  String(process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT),
+).with(
+  rest({
+    onRequest: (options) => ({ ...options, cache: "no-store" }),
+  }),
+);
 
 export async function getCollectionById(id: string) {
-  return directus.request(readItems(id))
+  return directus.request(readItems(id));
 }
 
-export async function getItemById(collection: string, id: number, options?: ItemsQuery) {
+export async function getItemById(
+  collection: string,
+  id: number,
+  options?: ItemsQuery,
+) {
   return directus.request(readItem(collection, id, options));
 }
 
@@ -40,7 +48,7 @@ interface Home {
 }
 
 export async function getHome() {
-  return getCollectionById('home') as unknown as Home;
+  return getCollectionById("home") as unknown as Home;
 }
 
 interface GlobalMetadata {
@@ -50,5 +58,5 @@ interface GlobalMetadata {
 }
 
 export async function getGlobalMetadata() {
-  return directus.request(readItems('global')) as unknown as GlobalMetadata;;
+  return directus.request(readItems("global")) as unknown as GlobalMetadata;
 }

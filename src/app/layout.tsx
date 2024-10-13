@@ -16,9 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className="antialiased min-h-screen grid grid-rows-[auto_1fr_auto]"
-      >
+      <body className="antialiased min-h-screen grid grid-rows-[auto_1fr_auto]">
         <Header />
         {children}
         <Footer />

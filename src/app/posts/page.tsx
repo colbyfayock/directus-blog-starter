@@ -1,14 +1,13 @@
 import Link from "next/link";
 
-import { getPosts } from '@/lib/posts';
+import { getPosts } from "@/lib/posts";
 
 import Container from "@/components/Container";
-
 
 export default async function Home() {
   const featuredPosts = await getPosts({
     limit: 6,
-    fields: ['slug', 'title', 'date_created']
+    fields: ["slug", "title", "date_created"],
   });
 
   return (
@@ -19,17 +18,18 @@ export default async function Home() {
             <h1 className="text-5xl leading-none mb-4">Posts</h1>
           </header>
           <ul className="grid gap-8">
-            {featuredPosts.map(post => {
+            {featuredPosts.map((post) => {
               return (
                 <li key={post.slug} className="space-y-1">
                   <h3 className="text-2xl">
-                    <Link href={`/posts/${post.slug}`}>{ post.title }</Link>
+                    <Link href={`/posts/${post.slug}`}>{post.title}</Link>
                   </h3>
                   <p className="text-slate-600">
-                    { post.date_created && new Date(post.date_created).toLocaleDateString() }
+                    {post.date_created &&
+                      new Date(post.date_created).toLocaleDateString()}
                   </p>
                 </li>
-              )
+              );
             })}
           </ul>
         </Container>

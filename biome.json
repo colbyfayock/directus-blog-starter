@@ -33,7 +33,10 @@
 				"useJsxKeyInIterable": "error",
 				"noUnusedImports": "error"
 			},
-			"security": { "noDangerouslySetInnerHtmlWithChildren": "error" },
+			"security": {
+				"noDangerouslySetInnerHtmlWithChildren": "error",
+				"noDangerouslySetInnerHtml": "off"
+			},
 			"style": { "noNamespace": "error", "useAsConstAssertion": "error" },
 			"suspicious": {
 				"noCommentText": "error",

@@ -1,14 +1,13 @@
-import Image from 'next/image';
+import Image from "next/image";
 
 import { getCourses } from "@/lib/courses";
 
 import Container from "@/components/Container";
 import { Button } from "@/components/ui/button";
 
-
 export default async function Home() {
   const courses = await getCourses({
-    fields: ['slug', 'title', 'cover', 'link']
+    fields: ["slug", "title", "cover", "link"],
   });
 
   return (
@@ -19,7 +18,7 @@ export default async function Home() {
             <h1 className="text-5xl leading-none mb-4">Courses</h1>
           </header>
           <ul className="grid grid-cols-2 gap-x-10 gap-y-16">
-            {courses.map(course => {
+            {courses.map((course) => {
               return (
                 <li key={course.slug} className="space-y-4">
                   <a href={course.link}>
@@ -33,9 +32,7 @@ export default async function Home() {
                     />
                   </a>
                   <h3 className="text-lg font-semibold leading-tight">
-                    <a href={course.link}>
-                      { course.title }
-                    </a>
+                    <a href={course.link}>{course.title}</a>
                   </h3>
                   <p className="text-slate-600">
                     <Button asChild>
@@ -43,7 +40,7 @@ export default async function Home() {
                     </Button>
                   </p>
                 </li>
-              )
+              );
             })}
           </ul>
         </Container>

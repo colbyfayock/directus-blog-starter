@@ -1,6 +1,6 @@
-import { readItem, readItems } from '@directus/sdk';
+import { readItem, readItems } from "@directus/sdk";
 
-import { directus, type ItemsQuery } from '@/lib/directus';
+import { type ItemsQuery, directus } from "@/lib/directus";
 
 export interface Page {
   date_created?: string;
@@ -12,7 +12,7 @@ export interface Page {
       data: {
         text: string;
         label?: number;
-      }
+      };
     }>;
     version: string;
   };
@@ -22,10 +22,13 @@ export interface Page {
 }
 
 export async function getPages(options?: ItemsQuery): Promise<Array<Page>> {
-  return directus.request(readItems('pages', options));
+  return directus.request(readItems("pages", options));
 }
 
-export async function getPageBySlug(slug: Page["slug"], options?: ItemsQuery): Promise<Page> {
-  if ( !slug ) throw new Error('Invalid slug');
-  return directus.request(readItem('pages', slug, options));
+export async function getPageBySlug(
+  slug: Page["slug"],
+  options?: ItemsQuery,
+): Promise<Page> {
+  if (!slug) throw new Error("Invalid slug");
+  return directus.request(readItem("pages", slug, options));
 }
