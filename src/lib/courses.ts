@@ -3,7 +3,11 @@ import { readItem, readItems } from "@directus/sdk";
 import { type ItemsQuery, directus } from "@/lib/directus";
 
 export interface Course {
-  cover?: string;
+  cover?: string | {
+    filename_disk: string;
+    height: number;
+    width: number;
+  };
   date_created?: string;
   link?: string;
   slug?: string;

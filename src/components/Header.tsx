@@ -9,8 +9,15 @@ import Container from "@/components/Container";
 async function Header() {
   const { title } = await getGlobalMetadata();
   const pages = (
-    await getPages({ fields: ["title", "slug", "navigation"] })
-  ).filter(({ navigation }) => navigation === "yes");
+    await getPages({
+      fields: ["title", "slug", "navigation"],
+      filter: {
+        navigation: {
+          _eq: "yes"
+        } 
+      }
+    })
+  )
   return (
     <header className="bg-slate-50 py-8">
       <Container>
@@ -25,18 +32,22 @@ async function Header() {
               {pages.map(({ title, slug }) => {
                 return (
                   <li key={slug}>
-                    <Link href={`/${slug}`}>{title}</Link>
+                    <Link href={`/${slug}`} className="hover:text-blue-500 hover:underline">
+                      {title}
+                    </Link>
                   </li>
                 );
               })}
               <li>
-                <Link href="/courses">Courses</Link>
+                <Link href="/courses" className="hover:text-blue-500 hover:underline">
+                  Courses
+                </Link>
               </li>
             </ul>
             <span>/</span>
             <ul className="flex gap-4">
               <li>
-                <a href="https://github.com/colbyfayock/test-directus-blog">
+                <a href="https://github.com/colbyfayock/test-directus-blog" className="hover:text-blue-500">
                   <Github className="w-4 h-auto" />
                 </a>
               </li>

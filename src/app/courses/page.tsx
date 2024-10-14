@@ -7,8 +7,10 @@ import { Button } from "@/components/ui/button";
 
 export default async function Home() {
   const courses = await getCourses({
-    fields: ["slug", "title", "cover", "link"],
+    fields: ["cover.filename_disk", "cover.height", "cover.width", "link", "slug", "title"],
   });
+
+  console.log('courses', courses)
 
   return (
     <>
@@ -21,21 +23,23 @@ export default async function Home() {
             {courses.map((course) => {
               return (
                 <li key={course.slug} className="space-y-4">
-                  <a href={course.link}>
-                    <Image
-                      className="block rounded-lg"
-                      width="1400"
-                      height="700"
-                      src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${course.cover}`}
-                      alt=""
-                      sizes="50vw"
-                    />
-                  </a>
+                  {typeof course.cover === 'object' && (
+                    <a href={course.link}>
+                      <Image
+                        className="block rounded-lg"
+                        width={course.cover.width}
+                        height={course.cover.height}
+                        src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${course.cover.filename_disk}`}
+                        alt=""
+                        sizes="50vw"
+                      />
+                    </a>
+                  )}
                   <h3 className="text-lg font-semibold leading-tight">
                     <a href={course.link}>{course.title}</a>
                   </h3>
-                  <p className="text-slate-600">
-                    <Button asChild>
+                  <p>
+                    <Button asChild className="font-bold">
                       <a href={course.link}>Get Started</a>
                     </Button>
                   </p>

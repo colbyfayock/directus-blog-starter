@@ -5,14 +5,15 @@ import { getItemById } from "@/lib/directus";
 
 export default async function Post({
   params,
-}: { params: { pageSlug: string } }) {
-  const data = await getPostBySlug(params.pageSlug, {
-    fields: ["title", "body"],
+}: { params: { postSlug: string } }) {
+  const data = await getPostBySlug(params.postSlug, {
+    fields: ["title", "body", "categories.post_categories_slug"],
   });
 
-  const categories = !Array.isArray(data.categories) ? [] : await Promise.all(data.categories.map(async (categoryId: number) => {
-    const junction = await getItemById('posts_post_categories', categoryId);
-    return getItemById('post_categories', junction.post_categories_slug, { fields: ['title'] });
+  const categorySlugs = data.categories?.filter(category => typeof category === 'object').map(({ post_categories_slug }) => post_categories_slug);
+
+  const categories = categorySlugs && await Promise.all(categorySlugs.map(async categorySlug => {
+    return getItemById('post_categories', categorySlug, { fields: ['title'] });
   }));
 
   return (
@@ -25,7 +26,7 @@ export default async function Post({
               Published{" "}
               {data.date_created &&
                 new Date(data.date_created).toLocaleDateString()}{" "}
-              in {categories.map(({ title }) => title)}
+              in {categories?.map(({ title }) => title).join(', ') || 'None'}
             </p>
           </header>
           {Array.isArray(data.body?.blocks) && (

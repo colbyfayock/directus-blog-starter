@@ -4,7 +4,9 @@ import { type ItemsQuery, directus } from "@/lib/directus";
 
 export interface Post {
   date_created?: string;
-  categories?: Array<number>;
+  categories?: Array<number | {
+    post_categories_slug: string;
+  }>;
   body?: {
     time: number;
     blocks: Array<{

@@ -3,6 +3,9 @@ import { createDirectus, readItem, readItems, rest } from "@directus/sdk";
 export interface ItemsQuery {
   limit?: number;
   fields?: Array<string>;
+  filter?: Record<string, {
+    _eq: string | number;
+  }>;
 }
 
 export const directus = createDirectus(
@@ -13,13 +16,13 @@ export const directus = createDirectus(
   }),
 );
 
-export async function getCollectionById(id: string) {
-  return directus.request(readItems(id));
+export async function getCollectionById(id: string, options?: ItemsQuery) {
+  return directus.request(readItems(id, options));
 }
 
 export async function getItemById(
   collection: string,
-  id: number,
+  id: number | string,
   options?: ItemsQuery,
 ) {
   return directus.request(readItem(collection, id, options));
@@ -39,7 +42,11 @@ interface Home {
   featured_title: string;
   hero_title: string;
   hero_subtitle: string;
-  hero_cover: string;
+  hero_cover: string | {
+    filename_disk: string;
+    height: number;
+    width: number;
+  };
   hero_buttons: Array<{
     label: string;
     link: string;
@@ -48,7 +55,14 @@ interface Home {
 }
 
 export async function getHome() {
-  return getCollectionById("home") as unknown as Home;
+  return getCollectionById("home", {
+    fields: [
+      '*',
+      "hero_cover.filename_disk",
+      "hero_cover.height",
+      "hero_cover.width",
+    ]
+  }) as unknown as Home;
 }
 
 interface GlobalMetadata {

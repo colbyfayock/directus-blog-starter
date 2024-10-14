@@ -37,14 +37,16 @@ export default async function Home() {
               </ul>
             )}
           </div>
-          <Image
-            className="block aspect-[21/9] object-cover rounded-lg"
-            width="2100"
-            height="900"
-            src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${data.hero_cover}`}
-            alt=""
-            sizes="100vw"
-          />
+          {typeof data.hero_cover === 'object' && (
+            <Image
+              className="block aspect-[21/9] object-cover rounded-lg"
+              width={data.hero_cover.width}
+              height={data.hero_cover.height}
+              src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${data.hero_cover.filename_disk}`}
+              alt=""
+              sizes="100vw"
+            />
+          )}
         </Container>
       </section>
       <section>
@@ -84,13 +86,17 @@ export default async function Home() {
       </section>
       <section>
         <Container className="py-28">
-          <h2 className="text-4xl mb-12">{data.featured_title}</h2>
-          <ul className="grid gap-8">
+          <header className="flex items-center justify-between w-full mb-12">
+            <h2 className="text-4xl">{data.featured_title}</h2>
+          </header>
+          <ul className="grid gap-8 mb-16">
             {featuredPosts.map((post) => {
               return (
                 <li key={post.slug} className="space-y-1">
                   <h3 className="text-2xl">
-                    <Link href={`/posts/${post.slug}`}>{post.title}</Link>
+                    <Link href={`/posts/${post.slug}`} className="hover:text-blue-500 hover:underline">
+                      {post.title}
+                    </Link>
                   </h3>
                   <p className="text-slate-600">
                     {post.date_created &&
@@ -100,6 +106,11 @@ export default async function Home() {
               );
             })}
           </ul>
+          <p className="text-xl">
+            <Link href="/posts" className="hover:text-blue-500 hover:underline">
+              View All Posts
+            </Link>
+          </p>
         </Container>
       </section>
     </>

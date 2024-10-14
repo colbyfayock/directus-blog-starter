@@ -22,7 +22,9 @@ export default async function Home() {
               return (
                 <li key={post.slug} className="space-y-1">
                   <h3 className="text-2xl">
-                    <Link href={`/posts/${post.slug}`}>{post.title}</Link>
+                    <Link href={`/posts/${post.slug}`} className="hover:text-blue-500 hover:underline">
+                      {post.title}
+                    </Link>
                   </h3>
                   <p className="text-slate-600">
                     {post.date_created &&
