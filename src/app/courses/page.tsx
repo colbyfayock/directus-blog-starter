@@ -9,9 +9,6 @@ export default async function Home() {
   const courses = await getCourses({
     fields: ["cover.filename_disk", "cover.height", "cover.width", "link", "slug", "title"],
   });
-
-  console.log('courses', courses)
-
   return (
     <>
       <section className="bg-slate-50">
