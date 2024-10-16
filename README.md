@@ -1,4 +1,4 @@
-# Blog
+# Next.js Blog with Directus
 
 ## Getting Started
 
