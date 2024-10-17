@@ -39,12 +39,12 @@ export default async function Home() {
           </div>
           {typeof data.hero_cover === 'object' && (
             <Image
-              className="block aspect-[21/9] object-cover rounded-lg"
-              width={data.hero_cover.width}
-              height={data.hero_cover.height}
-              src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${data.hero_cover.filename_disk}`}
+              className="block rounded-lg"
+              width={2100}
+              height={900}
+              src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${data.hero_cover.filename_disk}?width=2100&height=900`}
               alt=""
-              sizes="100vw"
+              sizes="(max-width: 1152px) 100vw, 1112px"
             />
           )}
         </Container>
