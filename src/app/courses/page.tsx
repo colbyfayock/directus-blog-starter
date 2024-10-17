@@ -1,9 +1,19 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 
+import { getGlobalMetadata } from "@/lib/directus";
 import { getCourses } from "@/lib/courses";
 
 import Container from "@/components/Container";
 import { Button } from "@/components/ui/button";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const global = await getGlobalMetadata();
+  return {
+    title: `Courses - ${global.title}`,
+    // description: '' // Add new field for excerpt or SEO Metadata
+  }
+}
 
 export default async function Home() {
   const courses = await getCourses({

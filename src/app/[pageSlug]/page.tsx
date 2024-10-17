@@ -1,10 +1,28 @@
+import type { Metadata } from "next";
+
+import { getGlobalMetadata } from "@/lib/directus";
 import { getPageBySlug } from "@/lib/pages";
 
 import Container from "@/components/Container";
 
-export default async function Post({
-  params,
-}: { params: { pageSlug: string } }) {
+interface PageParams {
+  params: {
+    pageSlug: string;
+  }
+}
+
+export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
+  const global = await getGlobalMetadata();
+  const page = await getPageBySlug(params.pageSlug, {
+    fields: ["title"],
+  });
+  return {
+    title: `${page.title} - ${global.title}`,
+    // description: '' // Add new field for excerpt or SEO Metadata
+  }
+}
+
+export default async function Post({ params }: PageParams) {
   const data = await getPageBySlug(params.pageSlug, {
     fields: ["title", "body"],
   });

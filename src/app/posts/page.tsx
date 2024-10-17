@@ -1,10 +1,20 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 
+import { getGlobalMetadata } from "@/lib/directus";
 import { getPosts } from "@/lib/posts";
 
 import Container from "@/components/Container";
 
-export default async function Home() {
+export async function generateMetadata(): Promise<Metadata> {
+  const global = await getGlobalMetadata();
+  return {
+    title: `All Posts - ${global.title}`,
+    // description: '', // Create request to get all categories and use to generate dynamic description
+  }
+}
+
+export default async function AllPostsPage() {
   const featuredPosts = await getPosts({
     limit: 6,
     fields: ["slug", "title", "date_created"],

@@ -45,6 +45,7 @@ export default async function Home() {
               src={`${process.env.NEXT_PUBLIC_DIRECTUS_API_ENDPOINT}/assets/${data.hero_cover.filename_disk}?width=2100&height=900`}
               alt=""
               sizes="(max-width: 1152px) 100vw, 1112px"
+              priority
             />
           )}
         </Container>
