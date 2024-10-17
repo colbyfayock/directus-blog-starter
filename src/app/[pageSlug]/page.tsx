@@ -4,6 +4,7 @@ import { getGlobalMetadata } from "@/lib/directus";
 import { getPageBySlug } from "@/lib/pages";
 
 import Container from "@/components/Container";
+import Block from "@/components/Block";
 
 interface PageParams {
   params: {
@@ -36,28 +37,7 @@ export default async function Post({ params }: PageParams) {
           </header>
           {Array.isArray(data.body?.blocks) && (
             <div>
-              {data.body.blocks.map((block) => {
-                if (block.type === "header") {
-                  return (
-                    <h2
-                      key={block.id}
-                      dangerouslySetInnerHTML={{
-                        __html: block.data.text,
-                      }}
-                    />
-                  );
-                }
-                if (block.type === "paragraph") {
-                  return (
-                    <p
-                      key={block.id}
-                      dangerouslySetInnerHTML={{
-                        __html: block.data.text,
-                      }}
-                    />
-                  );
-                }
-              })}
+              {data.body.blocks.map((block) => <Block key={block.id} {...block} />)}
             </div>
           )}
         </Container>

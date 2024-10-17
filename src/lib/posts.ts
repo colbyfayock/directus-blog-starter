@@ -1,6 +1,7 @@
 import { readItem, readItems } from "@directus/sdk";
 
 import { type ItemsQuery, directus } from "@/lib/directus";
+import type { Block } from '@/types/fields';
 
 export interface Post {
   date_created?: string;
@@ -9,14 +10,7 @@ export interface Post {
   }>;
   body?: {
     time: number;
-    blocks: Array<{
-      id: string;
-      type: string;
-      data: {
-        text: string;
-        label?: number;
-      };
-    }>;
+    blocks: Array<Block>;
     version: string;
   };
   slug?: string;
